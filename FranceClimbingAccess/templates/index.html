@@ -49,49 +49,44 @@
       <h1 class="text-success">Climbing Area Recommendation<span class="text-success">🧗</span></h1>
 
 <!--   adding form-->
-      <form action="/predict" method="POST">   <!-- do i need post method, double check-->
-          <div class="row"> <!-- Bootstrap Grid System-->  
+      <form action="http://127.0.0.1:5000/analyze" method="POST"> 
+          <div class="row">  
             <div class="col-md-4">  
-                <fieldset>
-                    <legend> What type of climbing?</legend>  
-                        <div>
-                            <label for="Ropes">Ropes</label>
-                            <input type="checkbox" id="Ropes" name="Ropes"> <!-- change to radio vert, rows not lining up-->
-                        </div>
-                        <div>
-                            <label for="Bouldering">Bouldering</label>
-                            <input type="checkbox" id="Bouldering" name="Bouldering">
-                        </div>
-                        <div>
-                            <label for="Both">Both</label>
-                            <input type="checkbox" id="Both" name="Both">
-                        </div>
-                </fieldset>
-
+                <legend> What type of climbing?</legend>  
+                    <input type="radio" name="ClimbType" id="Ropes" value="Ropes" checked="checked"> Ropes </input><br> <!--start with one selected-->
+					<input type="radio" name="ClimbType" id="Boulder" value="Boulder"> Bouldering </input><br>
+					<input type="radio" name="ClimbType" id="Both" value="Both"> Both </input><br>
+			</div>
             <div class="col-md-4">
-				<label for="Days">Days</label>
-				<input type="number" id="Days" name="Days" placeholder="# of Days Climbing" class="form-control" required step="0">
+				<legend> Days </legend>
+					<input type="number" id="Days" name="Days" placeholder="# of Days Climbing" class="form-control" min="1" required step="0">
 			</div>
 			<div class="col-md-4">
-				<label for="Region">Region</label> <!--change to radio vert-->
-				<input type="number" id="Region" name="Region" placeholder="Enter Region" class="form-control" required step="0">
+				<legend> Which region of France?</legend> <!--change to radio vert, start with region-->
+				<input type="radio" name="Region" id="NorthWest" value="NorthWest" checked="checked"> North West </input><br>
+				<input type="radio" name="Region" id="NorthEast" value="NorthEast"> North East </input><br>
+				<input type="radio" name="Region" id="Paris" value="Paris"> Greater Paris </input><br>
+				<input type="radio" name="Region" id="Central" value="Central"> Central </input><br>
+				<input type="radio" name="Region" id="SouthCentral" value="SouthCentral"> South Central </input><br>
+				<input type="radio" name="Region" id="SouthWest" value="SouthWest"> South West </input><br>
+				<input type="radio" name="Region" id="SouthEast" value="SouthEast"> South East </input><br>
 			</div>
           </div>
            <div class="row mt-4">
-           <div class="col-md-12 text-center">
+           <div class="col-md-4 text-center">
 				<button type="submit" class="btn btn-primary btn-lg">Get Recommendation</button>
 			</div>
 			</div>
       </form>
 
-       {% if result %}
+       {% if result %}   <!--figure out how to shift to left because want map in center and right-->
 		<div class="card bg-dark" style="width: 18rem;">
-		  <img src="{{url_for('static', filename='climb.png')}}" style="width: 70px; height: 70px;" class="card-img-top" alt="...">
-		  <div class="card-body">
-			<h5 class="card-title">Recommended Climbing Destination Is:</h5>
-			<p class="card-text">{{ result }} </p>
-		  </div>
-		</div>
+			<img src="{{url_for('static', filename='climb.png')}}" style="width: 70px; height: 70px;" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Recommended Climbing Destination Is:</h5>
+				<p class="card-text">{{ result }} </p>
+			</div>
+		</div>	
 	   {% endif %}
   </div>
 

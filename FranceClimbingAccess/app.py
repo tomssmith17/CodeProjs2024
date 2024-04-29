@@ -1,6 +1,8 @@
 from flask import Flask,request,render_template
 import pandas as pd
 import ipyleaflet as leaf
+#geopandas
+
 
 #googlemapsapi with token in textfile, read in to keep secret
 
@@ -8,25 +10,33 @@ import ipyleaflet as leaf
 #result will be text output of best climb destination and map showing route. 
 #top 3 results???
 
-"""
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route("/predict",methods=['POST'])
-def predict():
+@app.route("/analyze",methods=['POST'])
 
-    R = request.form['Ropes']
-    B = request.form['Bouldering']
-    Both = request.form['Both']
+def analyze():
+    cType = request.form['ClimbType']
     Days = request.form['Days']
     Region = request.form['Region']
-"""
 
+    #cAreas = GDF
+    #get data from french climb website and throw into gdf
+    #use osm for public transit info
+    data = {
+        'Crags': ['Fountainbleau', 'Les Calanques', 'Verdon Gorge', 'Ceuse', 'Gorge du Tarn'],
+        'Region': ['Paris', 'South East', 'South East', 'South East', 'South Central'],
+        'Size': ['Grande', 'Large', 'Grande', 'Grande', 'Medium'],
+        'Style': ['Bouldering', 'Ropes', 'Ropes', 'Ropes', 'Ropes'],
+        'GPS': [(1,2), (3,4), (5,6), (7,8), (9,10)]
+    }
+    user_input = [cType, int(Days), Region]
 
-
+    '''
     def questions(user_input, climb_all):
         print('here are your results: ')
         print(user_input) #strings
@@ -45,30 +55,20 @@ def predict():
         #subset data table to desired destinations w/ if else statement
         #output queried table to use later for mapping > look up how again
 
-    # add drop down lists for these
-    climb_type = input('rope climbing or bouldering?')
-    days = input('how many days do you have to climb?')
-    region = input('what region of france would you like to be in?')  
-    answers = [climb_type, days, region]
 
-    # pick a few areas to start where you just use a gps point to id it (or nearest and farthest???)
-    data = {
-        'Crags': ['Fountainbleau', 'Les Calanques', 'Verdon Gorge', 'Ceuse', 'Gorge du Tarn'],
-        'Region': ['Paris', 'South East', 'South East', 'South East', 'South Central'],
-        'Size': ['Grande', 'Large', 'Grande', 'Grande', 'Medium'],
-        'Style': ['Bouldering', 'Ropes', 'Ropes', 'Ropes', 'Ropes'],
-        'GPS': [(1,2), (3,4), (5,6), (7,8), (9,10)]
-    }
+
 
     df = pd.DataFrame(data)
     print(df)
 
     questions(answers, df)
+    '''
+    result = [type(cType), type(Days), type(Region)]
 
-    #return render_template('index.html',result = result)
+    return render_template('index.html',result = result)
 
-#if __name__ == "__main__":
-#    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
